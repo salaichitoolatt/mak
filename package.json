@@ -1,0 +1,15 @@
+{
+  "name": "mak",
+  "version": "0.1.0",
+  "description": "A tiny app working as media server",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.0.1"
+  }
+}
