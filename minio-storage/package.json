@@ -1,0 +1,24 @@
+{
+  "name": "minio-storage",
+  "version": "0.1.0",
+  "description": "A Minio Blob Storage Microservice",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.0.1",
+    "minio": "^8.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salaichitoolatt/mak.git"
+  },
+  "bugs": {
+    "url": "https://github.com/salaichitoolatt/mak/issues"
+  },
+  "homepage": "https://github.com/salaichitoolatt/mak#readme"
+}
