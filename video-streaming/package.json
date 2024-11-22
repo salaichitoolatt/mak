@@ -1,5 +1,5 @@
 {
-  "name": "mak",
+  "name": "video-streaming",
   "version": "0.1.0",
   "description": "A tiny app working as media server",
   "main": "index.js",
