@@ -1,12 +1,19 @@
 import express from "express";
 import fs from "fs";
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+if (!process.env.PORT) {
+  throw new Error(
+    "Please specify the port number for the HTTP server with the environment variable PORT."
+  );
+}
+
+const PORT = process.env.PORT;
 
 app.get("/video", async (req, res) => {
   const videoPath = "videos/Sample.mp4";
   const stats = await fs.promises.stat(videoPath);
-  
+
   res.writeHead(200, {
     "content-length": stats.size,
     "content-type": "video/mp4",
