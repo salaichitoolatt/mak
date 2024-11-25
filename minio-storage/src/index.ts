@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import * as Minio from "minio";
 
-let ACCESS_KEY = "duWkd7MGEI8KtWpt7kPW";
-let SECRET_KEY = "16HlgYxFNQOfgwJWea5REHGXqbWcEPykIrJKDl53";
+let ACCESS_KEY = process.env.ACCESS_KEY as string;
+let SECRET_KEY = process.env.SECRET_KEY as string;
 let bucketName = process.env.BUCKET_NAME || "bmdk1";
 const PORT = process.env.PORT || 3000;
 
