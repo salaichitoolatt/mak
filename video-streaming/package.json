@@ -2,11 +2,12 @@
   "name": "video-streaming",
   "version": "0.1.0",
   "description": "A tiny app working as media server",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "build": "tsc",
+    "watch": "tsc-watch --onSuccess 'node ./dist/index.js'",
+    "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
@@ -15,7 +16,10 @@
     "express": "^5.0.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.3",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.2"
   },
   "repository": {
     "type": "git",

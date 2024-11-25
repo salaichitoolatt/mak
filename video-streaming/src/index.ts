@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import fs from "fs";
 const app = express();
 
@@ -10,7 +10,7 @@ if (!process.env.PORT) {
 
 const PORT = process.env.PORT;
 
-app.get("/video", async (req, res) => {
+app.get("/video", async (req: Request, res: Response) => {
   const videoPath = "videos/Sample.mp4";
   const stats = await fs.promises.stat(videoPath);
 
