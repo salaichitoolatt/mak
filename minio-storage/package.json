@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc-watch --onSuccess 'node ./dist/index.js'",
-    "start": "npm run watch",
+    "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
@@ -27,7 +27,6 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.3",
-    "tsc": "^2.0.4",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.2"
   }

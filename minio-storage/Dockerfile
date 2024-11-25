@@ -1,8 +1,15 @@
-FROM node:18.20-slim
-
+FROM node:18.20-alpine AS build
 WORKDIR /usr/src/app
-COPY package*.json  ./
-RUN npm ci --omit=dev
+COPY package*.json ./
+RUN npm ci && npm cache clean --force
 COPY ./src ./src
+COPY ./tsconfig.json ./
+RUN npm run build
 
+# Production Build
+FROM node:18.20-alpine
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY --from=build /usr/src/app/dist ./dist
 CMD ["npm", "start"]
