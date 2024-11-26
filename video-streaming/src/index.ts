@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import http from "http";
-
-const app = express();
+import mongodb from "mongodb";
 
 if (!process.env.PORT) {
   throw new Error(
@@ -12,36 +11,53 @@ if (!process.env.PORT) {
 const PORT = process.env.PORT;
 const VIDEO_STORAGE_HOST = process.env.VIDEO_STORAGE_HOST || "localhost";
 const VIDEO_STORAGE_PORT = process.env.VIDEO_STORAGE_PORT || 3001;
+const DBHOST = process.env.DBHOST as string;
+const DBNAME = process.env.DBNAME;
 
-app.get("/video", async (req: Request, res: Response): Promise<void> => {
-  const forwardRequest = http.request(
-    {
-      host: VIDEO_STORAGE_HOST,
-      port: VIDEO_STORAGE_PORT,
-      path: "/video?path=Sample.mp4",
-      method: "GET",
-      headers: req.headers,
-    },
-    (forwardResponse) => {
-      const statusCode = forwardResponse.statusCode ?? 200;
-      res.writeHead(statusCode, forwardResponse.headers);
-      forwardResponse.pipe(res);
+async function main() {
+  const mongoClient = await mongodb.MongoClient.connect(DBHOST);
+  const db = mongoClient.db(DBNAME);
+  const videosCollection = db.collection("videos");
+
+  const app = express();
+
+  app.get("/video", async (req: Request, res: Response): Promise<void> => {
+    const videoId = new mongodb.ObjectId(req.query.id as string);
+    const videoRecord = await videosCollection.findOne({ _id: videoId });
+
+    if (!videoRecord) {
+      res.sendStatus(404);
+      return;
     }
-  );
 
-  forwardRequest.on("error", (err) => {
-    // Handle the error (e.g., by returning a 500 or other error status)
-    res.writeHead(500);
-    res.end("Error forwarding the request");
+    const forwardRequest = http.request(
+      {
+        host: VIDEO_STORAGE_HOST,
+        port: VIDEO_STORAGE_PORT,
+        path: `/video?path=${videoRecord.videoPath}`,
+        method: "GET",
+        headers: req.headers,
+      },
+      (forwardResponse) => {
+        const statusCode = forwardResponse.statusCode ?? 200;
+        res.writeHead(statusCode, forwardResponse.headers);
+        forwardResponse.pipe(res);
+      }
+    );
+
+    forwardRequest.on("error", (err) => {
+      // Handle the error (e.g., by returning a 500 or other error status)
+      res.writeHead(500);
+      res.end("Error forwarding the request");
+    });
+
+    forwardRequest.end();
   });
 
-  forwardRequest.end();
-});
+  app.listen(PORT);
+}
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+main().catch((err) => {
+  console.error("Microservice failed to start.");
+  console.error((err && err.stack) || err);
 });
-
-app.listen(PORT, () =>
-  console.log(`Video streaming microservice online 🚀🚀🚀`)
-);
