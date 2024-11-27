@@ -3,14 +3,15 @@
 This repository contains a microservices-based architecture for a video streaming app. The application is built using Node.js, Docker, Docker Compose, and MinIO for blob storage. The two primary microservices are:
 
 - **Video Streaming Service**: Handles video streaming functionality, including video upload, processing, and streaming.
-- **MinIO Blob Storage Service**: A scalable object storage service (compatible with AWS S3) to store and retrieve video files.
+- **S3 Blob Storage Service**: A scalable object storage service (AWS S3) to store and retrieve video files.
 
 ## Tech Stack
 
 - **Node.js**: JavaScript runtime environment for building server-side applications.
 - **Docker**: Containerization platform to create, deploy, and run applications in containers.
 - **Docker Compose**: A tool to define and manage multi-container Docker applications.
-- **MinIO**: High-performance, distributed object storage compatible with AWS S3.
+- **S3**: High-performance, distributed object storage, managed by AWS
+- **MongoDB** - A high-performance NoSQL Database.
 
 ## Services
 
@@ -22,8 +23,8 @@ The video streaming service provides endpoints for uploading, processing, and st
 - Stream videos to clients.
 - Support for multiple video formats.
 
-### 2. **MinIO Blob Storage Service**
-MinIO is used to provide scalable object storage for storing video files. It mimics AWS S3, allowing easy integration with the video streaming service.
+### 2. **S3 Blob Storage Service**
+AWS S3 is used to provide scalable object storage for storing video files, allowing easy integration with the video streaming service.
 
 #### Features:
 - Object storage compatible with S3 APIs.
