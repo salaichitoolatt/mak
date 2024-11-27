@@ -4,8 +4,16 @@
   "description": "A history of the viewed videos by users",
   "main": "./src/index.js",
   "scripts": {
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "express": "^5.0.1"
+  }
 }
