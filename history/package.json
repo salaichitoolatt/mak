@@ -1,0 +1,11 @@
+{
+  "name": "history",
+  "version": "0.1.0",
+  "description": "A history of the viewed videos by users",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "salaichitoolatt (salaichitoolatt@outlook.com)",
+  "license": "ISC"
+}
