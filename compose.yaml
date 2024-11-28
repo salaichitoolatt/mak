@@ -10,8 +10,11 @@ services:
     image: s3-storage
     build:
       context: ./s3-storage
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     container_name: video-storage
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./history/src:/usr/src/app/src:z
     ports:
       - "4001:80"
     environment:
@@ -24,8 +27,11 @@ services:
     image: video-streaming
     build:
       context: ./video-streaming
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     container_name: video-streaming
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./history/src:/usr/src/app/src:z
     ports:
       - "4002:80"
     environment:
