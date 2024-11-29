@@ -2,5 +2,7 @@ FROM node:18.20-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
+RUN apk add --no-cache dockerize
 COPY ./src ./src
-CMD ["node", "./dist/index.js"]
+CMD ["dockerize", "-wait", "tcp://rabbit:5672", "-timeout", "30s", "node", "./dist/index.js"]
+

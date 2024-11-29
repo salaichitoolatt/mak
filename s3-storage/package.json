@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/salaichitoolatt/mak#readme",
   "devDependencies": {
+    "@types/amqplib": "^0.10.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.3",
     "tsc-watch": "^6.2.1",
