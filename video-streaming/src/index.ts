@@ -1,6 +1,8 @@
+import { Channel } from "amqplib";
 import express, { Request, Response } from "express";
 import http from "http";
 import mongodb from "mongodb";
+import amqp from "amqplib";
 
 if (!process.env.PORT) {
   throw new Error(
@@ -13,13 +15,18 @@ const VIDEO_STORAGE_HOST = process.env.VIDEO_STORAGE_HOST || "localhost";
 const VIDEO_STORAGE_PORT = process.env.VIDEO_STORAGE_PORT || 3001;
 const DBHOST = process.env.DBHOST as string;
 const DBNAME = process.env.DBNAME;
+const RABBIT = process.env.RABBIT as string;
 
 async function main() {
+  const messagingConnection = await amqp.connect(RABBIT);
+
   const mongoClient = await mongodb.MongoClient.connect(DBHOST);
   const db = mongoClient.db(DBNAME);
   const videosCollection = db.collection("videos");
 
   const app = express();
+
+  const messageChannel = await messagingConnection.createChannel();
 
   app.get("/video", async (req: Request, res: Response): Promise<void> => {
     const videoId = new mongodb.ObjectId(req.query.id as string);
@@ -52,9 +59,17 @@ async function main() {
     });
 
     forwardRequest.end();
+
+    sendViewedMessage(messageChannel, videoRecord.videoPath);
   });
 
   app.listen(PORT);
+}
+
+function sendViewedMessage(messageChannel: Channel, videoPath: string) {
+  const msg = { videoPath: videoPath };
+  const jsonMsg = JSON.stringify(msg);
+  messageChannel.publish("", "viewed", Buffer.from(jsonMsg));
 }
 
 main().catch((err) => {
