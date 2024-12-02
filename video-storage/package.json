@@ -1,5 +1,5 @@
 {
-  "name": "s3-storage",
+  "name": "video-storage",
   "version": "0.1.0",
   "description": "A S3 Blob Storage Microservice",
   "main": "dist/index.js",
