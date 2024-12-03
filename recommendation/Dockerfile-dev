@@ -1,0 +1,6 @@
+FROM node:18.20-alpine
+WORKDIR /usr/src/app
+COPY package*.json ./
+COPY tsconfig.json ./
+CMD npm install --prefer-offline && \
+  npm run watch
