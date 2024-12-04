@@ -4,8 +4,15 @@ const app = express();
 
 const PORT = process.env.PORT;
 
-app.get("/status", (req: Request, res: Response) => {
-  res.send("Service online.");
-});
+async function main() {
+  app.get("/status", (req: Request, res: Response) => {
+    res.send("Service online.");
+  });
 
-app.listen(PORT, () => console.log("Microservice online."));
+  app.listen(PORT);
+}
+
+main().catch((err) => {
+  console.error("Microservice failed to start.");
+  console.error((err && err.stack) || err);
+});
